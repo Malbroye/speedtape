@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpeedTape ⚡ Ultra</title>
+    <link rel="stylesheet" href="style.css?v=1.1">
+</head>
+<body>
+    <!-- AUDIO TOGGLE FLOATING -->
+    <button id="audioToggle" class="floating-audio-btn" title="Activer/Désactiver le son">
+        <i data-lucide="volume-2" id="audioIcon"></i>
+    </button>
+    <!-- AUTH -->
+    <div id="authScreen" class="screen active">
+        <div class="container" style="max-width: 400px;">
+            <div class="logo-title" style="text-align: center; margin-bottom: 2rem;">SPEEDTAPE</div>
+            
+            <div class="settings-card">
+                <h3 id="authTitle" style="text-align:center; margin-bottom: 1.5rem; font-family: 'Space Grotesk';">CONNEXION</h3>
+                
+                <input type="text" id="authUsername" class="text-input" placeholder="Pseudo..." maxlength="15" style="margin-bottom: 1rem;" />
+                <input type="password" id="authPassword" class="text-input" placeholder="Code PIN (4 chiffres)" maxlength="4" pattern="\d{4}" style="margin-bottom: 1.5rem; text-align: center; letter-spacing: 12px; font-weight: 800; font-size: 1.5rem;" />
+                
+                <button id="authBtn" class="primary-btn" style="width: 100%;">ENTRER</button>
+                <button id="guestBtn" class="secondary-btn" style="width: 100%; margin-top: 1rem; border-style: dashed; opacity: 0.8;">JOUER EN INVITÉ</button>
+                
+                <p id="authSwitch" style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; cursor: pointer; opacity: 0.7;">
+                    Pas de compte ? <span style="color: var(--primary); font-weight: 800;">S'inscrire</span>
+                </p>
+
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(139, 92, 246, 0.1); border-radius: 12px; font-size: 0.75rem; line-height: 1.4; color: var(--text-muted); border-left: 3px solid var(--primary);">
+                    <p>💡 <b>L'inscription</b> sert uniquement à sauvegarder vos records sur le leaderboard mondial.</p>
+                    <p style="margin-top: 5px;">🎮 Pas besoin de compte pour jouer avec vos amis !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACCUEIL -->
+    <div id="homeScreen" class="screen">
+        <div class="container" style="max-width: 800px;">
+            <div class="logo-section">
+                <h1 class="logo-title">SPEEDTAPE</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-top: -10px;">L'arène des dactylos d'élite</p>
+            </div>
+
+            <div class="main-card">
+                <!-- Profil -->
+                <div class="card-section" style="border-right: 1px solid var(--border-light); padding-right: 2rem;">
+                    <label class="input-label">Identité</label>
+                    <div class="profile-upload-container">
+                        <div class="avatar-preview" id="avatarPreview" onclick="document.getElementById('avatarInput').click()" style="cursor: pointer;">
+                            <span>🦊</span>
+                            <div class="edit-badge"><i data-lucide="pencil" style="width: 14px; height: 14px;"></i></div>
+                        </div>
+                        <input type="file" id="avatarInput" accept="image/*" hidden />
+                        <div id="displayUsername" style="font-size: 1.5rem; font-weight: 800; margin-top: 1rem; color: var(--primary); text-align: center;">Pseudo</div>
+                        <button id="logoutBtn" class="secondary-btn" style="padding: 0.4rem 0.8rem; font-size: 0.7rem; margin-top: 1rem; width: 100%; border-color: var(--error); color: var(--error);">DÉCONNEXION</button>
+                    </div>
+                    <div class="avatar-grid" id="avatarSelector">
+                        <div class="avatar-option active" data-avatar="🦊">🦊</div>
+                        <div class="avatar-option" data-avatar="🐼">🐼</div>
+                        <div class="avatar-option" data-avatar="🐯">🐯</div>
+                        <button class="avatar-option" id="moreEmojisBtn" style="color: var(--primary);"><i data-lucide="plus"></i></button>
+                    </div>
+                </div>
+
+                <!-- Modal Galerie Emojis -->
+                <div id="emojiModal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 style="font-family: 'Space Grotesk';">Toute la Galerie</h3>
+                            <button id="closeEmojiModal" class="ghost-btn" style="padding: 0;"><i data-lucide="x"></i></button>
+                        </div>
+                        <div id="fullEmojiGrid" class="emoji-full-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card-section">
+                    <label class="input-label">Démarrer</label>
+                    <button id="createRoomBtn" class="primary-btn" style="margin-top: 0;">CRÉER UNE SALLE</button>
+                    
+                    <div style="text-align: center; margin: 1.5rem 0; color: var(--text-muted); font-size: 0.8rem;">OU REJOINDRE</div>
+                    
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                        <input type="text" id="roomCodeInput" class="code-input" placeholder="CODE" maxlength="6" />
+                        <button id="joinRoomBtn" class="secondary-btn" style="padding: 0 1.5rem;">GO</button>
+                    </div>
+
+                    <button id="joinRandomRoomBtn" class="secondary-btn" style="width: 100%; border-color: var(--accent); color: var(--accent); margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i data-lucide="shuffle" style="width: 18px;"></i> PARTIE RAPIDE (ALÉATOIRE)
+                    </button>
+
+                    <button id="showLeaderboardBtn" class="secondary-btn" style="width: 100%; border-style: dashed; opacity: 0.7; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <i data-lucide="trophy" style="width: 18px;"></i> CLASSEMENT
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div id="leaderboardScreen" class="screen">
+        <div class="container" style="max-width: 1000px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3rem;">
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <button id="backFromLeaderboardBtn" class="secondary-btn"><i data-lucide="arrow-left"></i></button>
+                    <h2 class="logo-title" style="font-size: 3rem; margin: 0;">HALL OF FAME</h2>
+                </div>
+                <div class="lb-stats-summary">
+                    <div class="stat-pill"><span id="lbTotalPlayers">0</span> JOUEURS</div>
+                </div>
+            </div>
+
+            <div class="leaderboard-header">
+                <div class="col-rank">RANG</div>
+                <div class="col-player">JOUEUR</div>
+                <div class="col-mode">MODE</div>
+                <div class="col-cpm">VITESSE</div>
+            </div>
+            
+            <div id="leaderboardList" class="leaderboard-scroll-area"></div>
+        </div>
+    </div>
+
+    <!-- LOBBY -->
+    <div id="lobbyScreen" class="screen">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+                <button id="leaveLobbyBtn" class="secondary-btn" style="border-color: var(--error); color: var(--error); display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem;">
+                    <i data-lucide="log-out" style="width: 18px;"></i> 
+                    <span style="font-size: 0.8rem; font-weight: 800;">QUITTER</span>
+                </button>
+                <div class="room-badge" id="copyCodeBtn" style="cursor: pointer;" title="Copier le code">
+                    <span id="roomCodeDisplay" class="room-code-text">------</span>
+                    <i data-lucide="copy" class="copy-icon" style="width: 18px;"></i>
+                </div>
+                <div style="width: 80px;"></div>
+            </div>
+
+            <div class="lobby-layout">
+                <div class="settings-card">
+                    <div class="setting-item">
+                        <label class="input-label">Séquence</label>
+                        <div class="toggle-group" id="lobbyModeToggle">
+                            <button data-val="words">MOTS</button>
+                            <button data-val="phrases">PHRASES</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" id="lobbyWordCountSection">
+                        <label class="input-label">Quantité</label>
+                        <div class="toggle-group" id="lobbyWordCountToggle">
+                            <button data-val="5">5</button>
+                            <button data-val="10">10</button>
+                            <button data-val="20">20</button>
+                            <button data-val="50">50</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" id="lobbyValidationSection">
+                        <label class="input-label">Validation</label>
+                        <div class="toggle-group" id="lobbyAutoValidateToggle">
+                            <button data-val="true">AUTO</button>
+                            <button data-val="false">ENTRÉE</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="input-label">Orthographe</label>
+                        <div class="toggle-group" id="lobbyAccentsToggle">
+                            <button data-val="true">ACCENTS</button>
+                            <button data-val="false">SANS</button>
+                        </div>
+                    </div>
+
+                    <div class="setting-item">
+                        <label class="input-label">Survie</label>
+                        <div class="toggle-group" id="lobbyDifficultyToggle">
+                            <button data-val="zen">ZEN</button>
+                            <button data-val="normal">3 VIES</button>
+                            <button data-val="sudden">HARDCORE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="players-grid" id="playersGrid"></div>
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <button id="startGameBtn" class="primary-btn" style="max-width: 400px; font-size: 1.2rem; display: none;">LANCER L'ASSAUT</button>
+                <p id="hostMessage" style="color: var(--primary); font-weight: 600; font-size: 1.1rem; display: none; animation: pulse 0.5s infinite alternate;">EN ATTENTE DE L'HÔTE...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JEU -->
+    <div id="gameScreen" class="screen">
+        <div class="container">
+            <div class="text-zone">
+                <div id="textDisplay" class="text-content"></div>
+            </div>
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+                <input type="text" id="typingInput" class="typing-field" placeholder="Tapez ici..." autocomplete="off" />
+                <div id="playersProgress" style="margin-top: 3rem;"></div>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button id="leaveGameBtn" class="secondary-btn" style="border-color: var(--error); color: var(--error); display: none;">QUITTER LA PARTIE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTATS -->
+    <div id="resultsScreen" class="screen">
+        <div class="container" style="max-width: 800px;">
+            <div id="winnerBanner" class="winner-banner">
+                <div class="confetti-container" id="confettiSpace"></div>
+                <div class="winner-content">
+                    <div id="winnerAvatar" class="winner-avatar">🦊</div>
+                    <div class="winner-info">
+                        <p class="winner-label">VAINQUEUR</p>
+                        <h2 id="winnerName" class="winner-name">PSEUDO</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div id="podiumContainer" class="podium-container">
+                <!-- Les 3 premiers seront injectés ici -->
+            </div>
+
+            <div id="resultsTable" class="results-list">
+                <!-- Le reste des joueurs ici -->
+            </div>
+
+            <div class="results-actions">
+                <button id="playAgainBtn" class="primary-btn">REJOUER</button>
+                <button id="backToMenuBtn" class="secondary-btn">MENU PRINCIPAL</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js?v=1.1"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+</body>
+</html>
