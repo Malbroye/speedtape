@@ -245,8 +245,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Servir les fichiers statiques
-app.use(express.static("public"));
+// Servir les fichiers statiques avec un chemin absolu
+app.use(express.static(path.join(__dirname, "public")));
+
+// Route par défaut (Catch-all) pour servir index.html
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // ============================================
 // SOCKET.IO - Multijoueur
