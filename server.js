@@ -517,7 +517,7 @@ io.on("connection", (socket) => {
     if (!room) return;
 
     // Seul l'hôte peut renvoyer tout le monde au lobby
-    if (room.hostId !== socket.id) return;
+    if (room.host !== socket.id) return;
 
     room.gameStarted = false;
     room.gameFinished = false;
